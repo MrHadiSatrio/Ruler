@@ -22,8 +22,8 @@ import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.extra
 import org.gradle.plugins.signing.SigningExtension
 
-const val RULER_PLUGIN_GROUP = "com.spotify.ruler"
-const val RULER_PLUGIN_VERSION = "2.0.0-beta-1" // Also adapt this version in the README
+const val RULER_PLUGIN_GROUP = "com.hadisatrio.libs"
+const val RULER_PLUGIN_VERSION = "1.0.0-alpha.1" // Also adapt this version in the README
 const val EXT_POM_NAME = "POM_NAME"
 const val EXT_POM_DESCRIPTION = "POM_DESCRIPTION"
 
@@ -47,11 +47,11 @@ fun PublishingExtension.configurePublications(project: Project) {
         pom {
             name.set(project.extra[EXT_POM_NAME].toString())
             description.set(project.extra[EXT_POM_DESCRIPTION].toString())
-            url.set("https://github.com/spotify/ruler")
+            url.set("https://github.com/MrHadiSatrio/ruler")
             scm {
-                url.set("https://github.com/spotify/ruler")
-                connection.set("scm:git@github.com:spotify/ruler.git")
-                developerConnection.set("scm:git@github.com:spotify/ruler.git")
+                url.set("https://github.com/MrHadiSatrio/ruler")
+                connection.set("scm:git@github.com:MrHadiSatrio/ruler.git")
+                developerConnection.set("scm:git@github.com:MrHadiSatrio/ruler.git")
             }
             licenses {
                 license {
@@ -61,8 +61,8 @@ fun PublishingExtension.configurePublications(project: Project) {
             }
             developers {
                 developer {
-                    id.set("spotify")
-                    name.set("Spotify AB")
+                    id.set("MrHadiSatrio")
+                    name.set("Hadi Satrio")
                 }
             }
         }
