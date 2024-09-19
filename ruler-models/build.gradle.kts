@@ -17,8 +17,7 @@
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("maven-publish")
-    id("signing")
+    id("com.vanniktech.maven.publish")
     id("io.gitlab.arturbosch.detekt")
 }
 
@@ -39,10 +38,6 @@ kotlin {
     }
 }
 
-publishing {
+mavenPublishing {
     configurePublications(project)
-}
-
-signing {
-    configureSigning(publishing.publications)
 }

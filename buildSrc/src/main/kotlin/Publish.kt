@@ -15,67 +15,42 @@
  */
 
 import org.gradle.api.Project
-import org.gradle.api.publish.PublicationContainer
-import org.gradle.api.publish.PublishingExtension
-import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.extra
-import org.gradle.plugins.signing.SigningExtension
+import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import com.vanniktech.maven.publish.SonatypeHost
 
-const val RULER_PLUGIN_GROUP = "com.hadisatrio.libs"
+const val RULER_PLUGIN_GROUP = "com.hadisatrio.libs.android"
 const val RULER_PLUGIN_VERSION = "1.0.0-alpha.1" // Also adapt this version in the README
 const val EXT_POM_NAME = "POM_NAME"
 const val EXT_POM_DESCRIPTION = "POM_DESCRIPTION"
 
-const val ENV_SONATYPE_USERNAME = "SONATYPE_USERNAME"
-const val ENV_SONATYPE_PASSWORD = "SONATYPE_PASSWORD"
+fun MavenPublishBaseExtension.configurePublications(project: Project) {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
 
-const val ENV_SIGNING_KEY = "PGP_SIGNING_KEY"
-const val ENV_SIGNING_PASSWORD = "PGP_SIGNING_PASSWORD"
+    coordinates(RULER_PLUGIN_GROUP, project.name, RULER_PLUGIN_VERSION)
+    signAllPublications()
 
-fun PublishingExtension.configurePublications(project: Project) {
-    val javadocJar = project.tasks.register("javadocJar", Jar::class.java) {
-        archiveClassifier.set("javadoc") // Use empty javadoc JAR until Dokka supports Kotlin Multiplatform projects
-    }
+    pom {
+        name.set(project.extra[EXT_POM_NAME].toString())
+        description.set(project.extra[EXT_POM_DESCRIPTION].toString())
+        url.set("https://github.com/MrHadiSatrio/Ruler")
 
-    publications.withType(MavenPublication::class.java) {
-        groupId = RULER_PLUGIN_GROUP
-        version = RULER_PLUGIN_VERSION
-
-        artifact(javadocJar)
-
-        pom {
-            name.set(project.extra[EXT_POM_NAME].toString())
-            description.set(project.extra[EXT_POM_DESCRIPTION].toString())
-            url.set("https://github.com/MrHadiSatrio/ruler")
-            scm {
-                url.set("https://github.com/MrHadiSatrio/ruler")
-                connection.set("scm:git@github.com:MrHadiSatrio/ruler.git")
-                developerConnection.set("scm:git@github.com:MrHadiSatrio/ruler.git")
+        scm {
+            url.set("https://github.com/MrHadiSatrio/Ruler")
+            connection.set("scm:git@github.com:MrHadiSatrio/Ruler.git")
+            developerConnection.set("scm:git@github.com:MrHadiSatrio/Ruler.git")
+        }
+        licenses {
+            license {
+                name.set("The Apache Software License, Version 2.0")
+                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
             }
-            licenses {
-                license {
-                    name.set("The Apache Software License, Version 2.0")
-                    url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                }
-            }
-            developers {
-                developer {
-                    id.set("MrHadiSatrio")
-                    name.set("Hadi Satrio")
-                }
+        }
+        developers {
+            developer {
+                id.set("MrHadiSatrio")
+                name.set("Hadi Satrio")
             }
         }
     }
-}
-
-fun SigningExtension.configureSigning(publications: PublicationContainer) {
-    val signingKey = System.getenv(ENV_SIGNING_KEY)
-    val signingPassword = System.getenv(ENV_SIGNING_PASSWORD)
-
-    // Only sign artifacts on CI
-    isRequired = signingKey != null && signingPassword != null
-
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign(publications)
 }

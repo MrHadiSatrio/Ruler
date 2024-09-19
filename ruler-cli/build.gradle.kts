@@ -20,8 +20,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
     id("io.gitlab.arturbosch.detekt")
     id("com.github.johnrengelman.shadow")
-    id("maven-publish")
-    id("signing")
+    id("com.vanniktech.maven.publish")
 }
 
 extra[EXT_POM_NAME] = "Ruler CLI"
@@ -57,15 +56,6 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            artifact(tasks["shadowJar"])
-        }
-    }
+mavenPublishing {
     configurePublications(project)
-}
-
-signing {
-    configureSigning(publishing.publications)
 }
