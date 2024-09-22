@@ -29,19 +29,3 @@ if (!startParameter.projectProperties.containsKey("withoutSample")) {
     include(":sample:dynamic")
     include(":sample:lib")
 }
-
-plugins {
-    id("com.gradle.enterprise") version "3.10" // https://mvnrepository.com/artifact/com.gradle.enterprise/com.gradle.enterprise.gradle.plugin
-}
-
-gradleEnterprise {
-    val isCiBuild = System.getenv("CI").toBoolean()
-
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        if (isCiBuild) {
-            termsOfServiceAgree = "yes"
-            publishAlways()
-        }
-    }
-}
