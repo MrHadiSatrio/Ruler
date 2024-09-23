@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import org.gradle.api.Project
-import org.gradle.kotlin.dsl.extra
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import com.vanniktech.maven.publish.SonatypeHost
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.extra
 
 const val RULER_PLUGIN_GROUP = "com.hadisatrio.libs.android"
-const val RULER_PLUGIN_VERSION = "1.0.0-alpha.1" // Also adapt this version in the README
+const val RULER_PLUGIN_VERSION = "1.0.0-alpha.2" // Also adapt this version in the README
 const val EXT_POM_NAME = "POM_NAME"
 const val EXT_POM_DESCRIPTION = "POM_DESCRIPTION"
 
