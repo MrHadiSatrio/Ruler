@@ -18,8 +18,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("io.gitlab.arturbosch.detekt")
-    id("maven-publish")
-    id("signing")
+    id("com.vanniktech.maven.publish")
 }
 
 extra[EXT_POM_NAME] = "Ruler common"
@@ -80,20 +79,10 @@ tasks.withType<Copy>().named("processResources") {
     from(browserDist)
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("jvm") {
-            from(components["java"])
-        }
-    }
+mavenPublishing {
     configurePublications(project)
 }
 
-
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-signing {
-    configureSigning(publishing.publications)
 }

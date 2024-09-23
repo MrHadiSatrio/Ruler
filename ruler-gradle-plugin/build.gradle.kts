@@ -17,8 +17,7 @@
 plugins {
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("maven-publish")
-    id("signing")
+    id("com.vanniktech.maven.publish")
     id("io.gitlab.arturbosch.detekt")
 }
 
@@ -88,15 +87,6 @@ kotlin {
     jvmToolchain(17)
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("jvm") {
-            from(components["java"])
-        }
-    }
+mavenPublishing {
     configurePublications(project)
-}
-
-signing {
-    configureSigning(publishing.publications)
 }

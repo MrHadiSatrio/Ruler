@@ -19,9 +19,16 @@ plugins {
 }
 
 repositories {
+    google()
     mavenCentral()
 }
 
 kotlin {
     jvmToolchain(17)
+}
+
+dependencies {
+    implementation("com.android.tools.build:gradle:8.2.0")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.20")
+    implementation("com.vanniktech:gradle-maven-publish-plugin:0.29.0")
 }

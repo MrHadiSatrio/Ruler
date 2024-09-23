@@ -3,9 +3,9 @@
 
 _Ruler is a Gradle plugin which helps you analyze the size of your Android apps._
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/spotify/ruler/ci.yaml?branch=main)](https://github.com/spotify/ruler/actions)
-[![Maven Release](https://img.shields.io/maven-central/v/com.spotify.ruler/ruler-gradle-plugin)](https://github.com/spotify/ruler/releases)
-[![License](https://img.shields.io/github/license/spotify/ruler)](https://github.com/spotify/ruler/blob/main/LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/MrHadiSatrio/Ruler/ci.yaml?branch=main)](https://github.com/MrHadiSatrio/Ruler/actions)
+[![Maven Release](https://img.shields.io/maven-central/v/com.hadisatrio.libs.android/ruler-gradle-plugin)](https://github.com/MrHadiSatrio/Ruler/releases)
+[![License](https://img.shields.io/github/license/MrHadiSatrio/Ruler)](https://github.com/MrHadiSatrio/Ruler/blob/main/LICENSE)
 
 ## Motivation
 
@@ -33,7 +33,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.spotify.ruler:ruler-gradle-plugin:2.0.0-beta-1")
+        classpath("com.hadisatrio.libs.android:ruler-gradle-plugin:1.0.0-alpha.1")
     }
 }
 ```
@@ -43,7 +43,7 @@ You also have to apply the plugin in the `build.gradle` of your application modu
 ```kotlin
 plugins {
     id("com.android.application")
-    id("com.spotify.ruler")
+    id("com.hadisatrio.libs.android.ruler")
 }
 ```
 
@@ -135,11 +135,11 @@ Earlier versions might also work, but compatibility can't be guaranteed.
 
 We want your help to improve Ruler! You can contribute by opening issues for bugs and ideas for improvement.
 
-You can also contribute directly by solving open issues. Specifically look out for issues marked as [bugs](https://github.com/spotify/ruler/labels/bug), [good first issues](https://github.com/spotify/ruler/labels/good%20first%20issue) and [help wanted](https://github.com/spotify/ruler/labels/help%20wanted).
+You can also contribute directly by solving open issues. Specifically look out for issues marked as [bugs](https://github.com/MrHadiSatrio/ruler/labels/bug), [good first issues](https://github.com/MrHadiSatrio/ruler/labels/good%20first%20issue) and [help wanted](https://github.com/MrHadiSatrio/ruler/labels/help%20wanted).
 
 ## Code of conduct
 
-This project adheres to the [Open Code of Conduct](https://github.com/spotify/code-of-conduct/blob/master/code-of-conduct.md). By participating, you are expected to honor this code.
+This project adheres to the [Open Code of Conduct](https://github.com/MrHadiSatrio/code-of-conduct/blob/master/code-of-conduct.md). By participating, you are expected to honor this code.
 
 ## License
 

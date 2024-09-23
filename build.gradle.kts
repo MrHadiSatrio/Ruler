@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import io.github.gradlenexus.publishplugin.NexusPublishExtension
-
 buildscript {
     repositories {
         mavenLocal {
@@ -33,7 +31,6 @@ buildscript {
         classpath(Dependencies.KOTLIN_GRADLE_PLUGIN)
         classpath(Dependencies.KOTLINX_SERIALIZATION_GRADLE_PLUGIN)
         classpath(Dependencies.DETEKT_GRADLE_PLUGIN)
-        classpath(Dependencies.NEXUS_PUBLISH_GRADLE_PLUGIN)
         classpath(Dependencies.SHADOW_GRADLE_PLUGIN)
 
         if (!properties.containsKey("withoutSample")) {
@@ -41,8 +38,6 @@ buildscript {
         }
     }
 }
-
-apply(plugin = "io.github.gradle-nexus.publish-plugin")
 
 allprojects {
     repositories {
@@ -53,19 +48,3 @@ allprojects {
 
 group = RULER_PLUGIN_GROUP
 version = RULER_PLUGIN_VERSION
-
-extensions.configure(NexusPublishExtension::class) {
-    repositories {
-        sonatype {
-            username.set(System.getenv(ENV_SONATYPE_USERNAME))
-            password.set(System.getenv(ENV_SONATYPE_PASSWORD))
-        }
-    }
-}
-
-allprojects {
-    tasks.withType<AbstractPublishToMaven>().configureEach {
-        val signingTasks = tasks.withType<Sign>()
-        mustRunAfter(signingTasks)
-    }
-}

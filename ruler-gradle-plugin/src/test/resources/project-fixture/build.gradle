@@ -18,13 +18,13 @@ buildscript {
     repositories {
         mavenLocal {
             content {
-                includeGroup("com.spotify.ruler") // Only load Ruler plugin from local Maven
+                includeGroup("com.hadisatrio.libs.android.ruler") // Only load Ruler plugin from local Maven
             }
         }
         google()
         mavenCentral {
             content {
-                excludeGroup("com.spotify.ruler") // Don't rely on published versions in tests
+                excludeGroup("com.hadisatrio.libs.android.ruler") // Don't rely on published versions in tests
             }
         }
     }
