@@ -69,7 +69,8 @@ class RulerPlugin : Plugin<Project> {
 
                     task.verificationConfig.set(getVerificationConfig(rulerVerificationExtension))
 
-                    // Add explicit dependency to support DexGuard
+                    // Add explicit dependency to support ProGuard and DexGuard
+                    if (hasDexGuard(project)) task.dependsOn("dexguardOverwriteAab$variantName")
                     task.dependsOn("bundle$variantName")
                 }
             }
