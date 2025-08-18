@@ -60,8 +60,8 @@ class RulerPlugin : Plugin<Project> {
                     task.ownershipFile.set(rulerExtension.ownershipFile)
                     task.defaultOwner.set(rulerExtension.defaultOwner)
 
-                    task.workingDir.set(project.layout.buildDirectory.dir("intermediates/ruler/${variant.name}"))
-                    task.reportDir.set(project.layout.buildDirectory.dir("reports/ruler/${variant.name}"))
+                    task.workingDir.set(project.layout.buildDirectory.dir("intermediates/ruler/${variant.outputPathSegment}"))
+                    task.reportDir.set(project.layout.buildDirectory.dir("reports/ruler/${variant.outputPathSegment}"))
 
                     task.staticDependenciesFile.set(rulerExtension.staticDependenciesFile)
                     task.omitFileBreakdown.set(rulerExtension.omitFileBreakdown)
@@ -127,8 +127,8 @@ class RulerPlugin : Plugin<Project> {
     ): Provider<RegularFile> {
         val defaultMappingFile = variant.artifacts.get(SingleArtifact.OBFUSCATION_MAPPING_FILE)
         val mappingFilePath = when {
-            hasDexGuard(project) -> "outputs/dexguard/mapping/bundle/${variant.name}/mapping.txt"
-            hasProGuard(project) -> "outputs/proguard/${variant.name}/mapping/mapping.txt"
+            hasDexGuard(project) -> "outputs/dexguard/mapping/bundle/${variant.outputPathSegment}/mapping.txt"
+            hasProGuard(project) -> "outputs/proguard/${variant.outputPathSegment}/mapping/mapping.txt"
             else -> return defaultMappingFile // No special obfuscation plugin -> use default path
         }
 
@@ -153,7 +153,7 @@ class RulerPlugin : Plugin<Project> {
     ): Provider<RegularFile> {
         val defaultResourceMappingFile = project.objects.fileProperty() // Empty by default
         val resourceMappingFilePath = when {
-            hasDexGuard(project) -> "outputs/dexguard/mapping/bundle/${variant.name}/resourcefilenamemapping.txt"
+            hasDexGuard(project) -> "outputs/dexguard/mapping/bundle/${variant.outputPathSegment}/resourcefilenamemapping.txt"
             else -> return defaultResourceMappingFile // No DexGuard plugin -> use default empty file
         }
 
@@ -184,5 +184,21 @@ class RulerPlugin : Plugin<Project> {
     /** Checks if the given [project] is using ProGuard for obfuscation, instead of R8. */
     private fun hasProGuard(project: Project): Boolean {
         return project.pluginManager.hasPlugin("com.guardsquare.proguard")
+    }
+
+    /**
+     *  Extension property to get the output path segment for the variant.
+     *  The resulting segment will respect the variant's both flavor and build
+     *  type names in the same way Android's default plugins do.
+     *  For instance, given "Paid" and "Release" as the flavor and build type
+     *  name respectively, the resulting path segment would be 'paid/release'. */
+    private val ApplicationVariant.outputPathSegment: String get() {
+        val flavorName = this.flavorName.orEmpty()
+        val buildTypeName = this.buildType.orEmpty()
+        return if (flavorName.isNotEmpty() && buildTypeName.isNotEmpty()) {
+            "${flavorName}/${buildTypeName}"
+        } else {
+            this.name
+        }
     }
 }
